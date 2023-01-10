@@ -6,8 +6,14 @@ const {
 } = require('../models/contacts');
 
 const getAll = async (req, res, next) => {
+  const { _id: owner } = req.user;
+  const { page = 1, limit = 10 } = req.query;
+  const skip = (page - 1) * limit;
   try {
-    const allContacts = await Contact.find();
+    const allContacts = await Contact.find({ owner }, '-createdAt -updatedAt', {
+      skip,
+      limit,
+    }).populate('owner', 'name email');
     res.status(200).json(allContacts);
   } catch (e) {
     res.status(404).json({ message: 'No contacts found' });
@@ -30,12 +36,12 @@ const getContactById = async (req, res, next) => {
 
 const addNewContact = async (req, res, next) => {
   const { error } = addValidate.validate(req.body);
-
+  const { _id: owner } = req.user;
   try {
     if (error) {
       throw error;
     }
-    const contact = await Contact.create(req.body);
+    const contact = await Contact.create({ ...req.body, owner });
     if (!contact) {
       throw new Error('This contact is already in your contact list');
     }
