@@ -22,6 +22,10 @@ const userSchema = new Schema(
       type: String,
       required: [true, 'Password required'],
     },
+    avatarURL: {
+      type: String,
+      require: true,
+    },
     token: {
       type: String,
     },
