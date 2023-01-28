@@ -15,6 +15,8 @@ router.post('/logout', authenticate, ctrlAuth.logOut);
 
 router.get('/verify/:verificationToken', ctrlAuth.emailVerify);
 
+router.get('/verify', ctrlAuth.repeatVerify);
+
 router.patch(
   '/avatars',
   authenticate,
