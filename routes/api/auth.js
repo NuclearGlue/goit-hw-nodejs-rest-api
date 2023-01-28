@@ -13,6 +13,8 @@ router.get('/current', authenticate, ctrlAuth.getCurrent);
 
 router.post('/logout', authenticate, ctrlAuth.logOut);
 
+router.get('/verify/:verificationToken', ctrlAuth.emailVerify);
+
 router.patch(
   '/avatars',
   authenticate,

@@ -18,7 +18,6 @@ app.use(express.static('public'));
 
 app.use('/api/auth', authRouter);
 app.use('/contacts', contactsRouter);
-
 app.get('/', (req, res) => {
   res.status(200).send('<h2>Homepage</h2>');
 });
